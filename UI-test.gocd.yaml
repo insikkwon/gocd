@@ -1,0 +1,16 @@
+format_version: 10
+pipelines:
+  UI-test:
+    group: Kubernetes
+    template: test
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      git-c6b19d9:
+        git: https://github.com/insikkwon/gauge_py.git
+        username: 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
+        shallow_clone: false
+        auto_update: true
+        branch: master
+        encrypted_password: AES:KR2hL6ydukchhsw8xr7gig==:Os9qU1PbAPISgvtv17pAa9mvUYCzizLZs+6CpFariAPq+S2rtYNg3wh0jggZneMc

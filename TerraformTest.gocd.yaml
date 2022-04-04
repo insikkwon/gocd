@@ -1,0 +1,31 @@
+format_version: 10
+pipelines:
+  TerraformTest:
+    group: Kubernetes
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      git-742ca1f:
+        git: https://github.com/insikkwon/gauge_py
+        username: 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
+        shallow_clone: false
+        auto_update: true
+        branch: master
+        encrypted_password: AES:4ovYDkZ9ukZxlx0gonW90g==:naMsi+lT88r/KDbVw/8Et+8/8Dmv6PirrzDUt/UF2YB/xMmQULm9vgtZs5lMcNj/
+    stages:
+    - NKS_TerraformTest_Job:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          NKS_TerraformTest_task:
+            timeout: 0
+            elastic_profile_id: gauge-run
+            tasks:
+            - exec:
+                command: ls
+                run_if: passed

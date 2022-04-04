@@ -1,0 +1,54 @@
+format_version: 10
+pipelines:
+  api-test:
+    group: Kubernetes
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      git-cf5f01a:
+        git: https://github.com/insikkwon/gauge_py.git
+        username: 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
+        shallow_clone: false
+        auto_update: true
+        branch: master
+        encrypted_password: AES:fAFPcs/5ZHRbCk5UhadGZw==:6He7HN67BJxWyyWqDbXi0t3oYI9W7w2fHoPsYxWPfT5YQp/Eu/JvsGb1ITb8uOR3
+    stages:
+    - stage1:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          test:
+            timeout: 0
+            environment_variables:
+              access_key: 47dXae4dRFfJVnnZ2lKD
+              secret_key: RAicgu9TT0BQ6O3YtTb3YXM8eZqBasI4UBM1wBAJ
+              platform: 민간 Real
+            tabs:
+              GaugeResult: reports/index.html
+            elastic_profile_id: gauge-run
+            artifacts:
+            - build:
+                source: reports/html-report/*
+                destination: reports
+            tasks:
+            - exec:
+                command: env
+                run_if: passed
+            - exec:
+                arguments:
+                - run
+                - ./specs/common/baseconfig_modify.spec
+                - ./specs/classic/commpute/server/scenario_Test/server/server_API_cpt_ex3.spec
+                command: gauge
+                run_if: passed
+            - exec:
+                arguments:
+                - -c
+                - ls -a
+                command: bash
+                run_if: passed

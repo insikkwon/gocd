@@ -1,0 +1,36 @@
+format_version: 10
+pipelines:
+  nks_scenario_stage:
+    group: Kubernetes
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      TerraformTest:
+        ignore_for_scheduling: false
+        pipeline: TerraformTest
+        stage: NKS_TerraformTest_Job
+      api-test:
+        ignore_for_scheduling: false
+        pipeline: api-test
+        stage: stage1
+      UI-test:
+        ignore_for_scheduling: false
+        pipeline: UI-test
+        stage: kubernetes_UI_Stage
+    stages:
+    - nks_scenario_job:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          nks_scenario_task:
+            timeout: 0
+            elastic_profile_id: gauge-run
+            tasks:
+            - exec:
+                command: ls
+                run_if: passed
