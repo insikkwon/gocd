@@ -1,0 +1,38 @@
+format_version: 10
+pipelines:
+  nks-api-test:
+    group: sample
+    label_template: ${COUNT}
+    lock_behavior: none
+    display_order: -1
+    materials:
+      git-335c3db:
+        git: https://github.com/insikkwon/gauge_py.git
+        username: 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
+        shallow_clone: false
+        auto_update: true
+        branch: master
+    stages:
+    - stage1:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+          type: success
+          allow_only_on_success: false
+        jobs:
+          unit-test:
+            timeout: 0
+            tasks:
+            - exec:
+                command: gauge
+                run_if: passed
+            - exec:
+                command: run
+                run_if: passed
+            - exec:
+                command: ./specs/common/baseconfig_modify.spec
+                run_if: passed
+            - exec:
+                command: ./specs/classic/commpute/server/scenario_Test/server/server_API_cpt_ex3.spec
+                run_if: passed
