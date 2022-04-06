@@ -8,7 +8,7 @@ pipelines:
     materials:
       git-335c3db:
         git: https://github.com/insikkwon/gauge_py.git
-        username: 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
+        username: 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
         shallow_clone: false
         auto_update: true
         branch: master
